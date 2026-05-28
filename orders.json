@@ -1,0 +1,84 @@
+[
+  {
+    "id": "ORD-8739",
+    "status": "cancelled",
+    "timestamp": "2026-05-26T16:16:47.454Z",
+    "customerName": "Ayush kale",
+    "customerPhone": "9689574117",
+    "tableNumber": "1",
+    "items": [
+      {
+        "id": 1,
+        "name": "Masala Maggi",
+        "price": 99,
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "name": "Cheese Masala Maggi",
+        "price": 149,
+        "quantity": 1
+      }
+    ],
+    "totalPrice": 248,
+    "paymentMethod": "counter",
+    "paymentStatus": "pending"
+  },
+  {
+    "id": "ORD-2658",
+    "status": "served",
+    "timestamp": "2026-05-26T16:31:08.586Z",
+    "customerName": "Ayush ",
+    "customerPhone": "9689574117",
+    "tableNumber": "1",
+    "items": [
+      {
+        "id": 1,
+        "name": "Masala Maggi",
+        "price": 99,
+        "quantity": 1
+      }
+    ],
+    "totalPrice": 99,
+    "paymentMethod": "counter",
+    "paymentStatus": "paid"
+  },
+  {
+    "id": "ORD-3045",
+    "status": "served",
+    "timestamp": "2026-05-26T16:33:15.604Z",
+    "customerName": "Kartik",
+    "customerPhone": "8261996991",
+    "tableNumber": "1",
+    "items": [
+      {
+        "id": 4,
+        "name": "Creamy Garlic Mushroom Maggi",
+        "price": 259,
+        "quantity": 2
+      }
+    ],
+    "totalPrice": 518,
+    "paymentMethod": "upi",
+    "paymentStatus": "paid"
+  },
+  {
+    "id": "ORD-4533",
+    "status": "served",
+    "timestamp": "2026-05-26T16:33:15.645Z",
+    "customerName": "Kartik",
+    "customerPhone": "8261996991",
+    "tableNumber": "1",
+    "items": [
+      {
+        "id": 4,
+        "name": "Creamy Garlic Mushroom Maggi",
+        "price": 259,
+        "quantity": 2
+      }
+    ],
+    "totalPrice": 518,
+    "paymentMethod": "upi",
+    "paymentStatus": "paid"
+  }
+]

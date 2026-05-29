@@ -92,6 +92,12 @@ export default function App() {
   // Table and Cart States
   const [tableNumber, setTableNumber] = useState('1');
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartWiggle, setCartWiggle] = useState(false);
+
+  const triggerCartWiggle = () => {
+    setCartWiggle(true);
+    setTimeout(() => setCartWiggle(false), 400);
+  };
 
   // Checkout Details
   const [customerName, setCustomerName] = useState('');
@@ -211,6 +217,7 @@ export default function App() {
 
   // Add / Edit Cart Actions
   const addToCart = (item: MenuItem) => {
+    triggerCartWiggle();
     setCart(prev => {
       const existing = prev.find(i => i.item.id === item.id);
       if (existing) {
@@ -221,6 +228,7 @@ export default function App() {
   };
 
   const removeFromCart = (item: MenuItem) => {
+    triggerCartWiggle();
     setCart(prev => {
       const existing = prev.find(i => i.item.id === item.id);
       if (existing && existing.quantity > 1) {
@@ -398,7 +406,7 @@ export default function App() {
               {/* Checkout Button */}
               <button
                 onClick={() => setView('checkout')}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-4 rounded-2xl shadow-xl transition-all hover:scale-[1.01]"
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-4 rounded-2xl shadow-xl transition-all hover:scale-[1.01] animate-shimmer"
               >
                 Proceed to Checkout
               </button>
@@ -543,7 +551,7 @@ export default function App() {
                     submitOrder('pending');
                   }
                 }}
-                className={`w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold px-8 py-3.5 rounded-2xl shadow-xl transition-all
+                className={`w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold px-8 py-3.5 rounded-2xl shadow-xl transition-all animate-shimmer
                   ${!customerName.trim() ? 'opacity-50 cursor-not-allowed' : 'hover:scale-[1.01]'}`}
               >
                 {paymentMethod === 'upi' ? 'Pay & Place Order' : 'Place Order (Pay Later)'}
@@ -731,20 +739,24 @@ export default function App() {
 
   // 5. MAIN MENU VIEW (DEFAULT)
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24 relative overflow-x-hidden">
+      {/* Background watermark cheese texture overlay */}
+      <div className="absolute inset-0 cheese-texture-subtle pointer-events-none opacity-25 z-0"></div>
 
       {/* Top Navbar */}
-      <div className="bg-white border-b border-slate-100 py-2 px-4 sticky top-0 z-40 shadow-sm flex items-center justify-between">
+      <div className="bg-[#FFC222] cheese-texture py-2 px-4 sticky top-0 z-40 shadow-md flex items-center justify-between border-b border-amber-600/35 relative">
         <div className="flex items-center gap-3">
-          <img src="/crazy_cheesy_logo.png" alt="Crazy Cheesy Logo" className="w-11 h-11 object-contain rounded-full shadow-sm" />
-          <span className="font-extrabold text-lg text-slate-900 tracking-tight">Crazy Cheesy</span>
+          <img src="/crazy_cheesy_logo.png" alt="Crazy Cheesy Logo" className="w-11 h-11 object-contain rounded-full shadow-sm border border-white bg-white" />
+          <span className="font-extrabold text-lg text-slate-900 tracking-tight drop-shadow-sm">Crazy Cheesy</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs bg-[#FAF6EE] text-[#78350f] font-bold px-3 py-1.5 rounded-full border border-[#EBE2CF]">
+          <span className="text-xs bg-white text-[#78350f] font-black px-3 py-1.5 rounded-full border border-amber-400 shadow-sm animate-gold-pulse">
             Table {tableNumber}
           </span>
         </div>
       </div>
+      {/* Melting cheese drips under navbar */}
+      <div className="cheese-drips sticky top-[60px] z-30 -mt-0.5 shadow-sm"></div>
 
       {/* Hero Header */}
       <header className="relative bg-white pb-6 shadow-sm">
@@ -791,7 +803,7 @@ export default function App() {
       </header>
 
       {/* Navigation & Search Sticky Bar */}
-      <div className="sticky top-[60px] z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+      <div className="sticky top-[80px] z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 
@@ -846,7 +858,7 @@ export default function App() {
               return (
                 <div
                   key={item.id}
-                  className="bg-[#FAF6EE] rounded-3xl overflow-hidden border border-[#EBE2CF] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-[#FAF6EE] rounded-3xl overflow-hidden border border-[#EBE2CF] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group animate-pop-in relative z-10"
                 >
                   {/* Image Container */}
                   <div className="p-4 pb-0 cursor-pointer" onClick={() => setSelectedItem(item)}>
@@ -854,11 +866,11 @@ export default function App() {
                       <img
                         src={item.img}
                         alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-108 group-hover:rotate-1 transition-transform duration-500"
                         loading="lazy"
                       />
                       {item.popular && (
-                        <div className="absolute top-2 right-2 bg-red-500 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm flex items-center">
+                        <div className="absolute top-2 right-2 bg-red-500 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm flex items-center animate-pulse">
                           <Star className="w-2.5 h-2.5 mr-0.5 fill-white text-white" /> Bestseller
                         </div>
                       )}
@@ -909,7 +921,7 @@ export default function App() {
                       ) : (
                         <button
                           onClick={() => addToCart(item)}
-                          className="bg-[#FFC222] hover:bg-[#e0ab1f] text-[#1E1D23] text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm flex items-center gap-1.5 active:scale-95 border border-[#e0ab1f]"
+                          className="bg-[#FFC222] hover:bg-[#e0ab1f] text-[#1E1D23] text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm flex items-center gap-1.5 active:scale-95 border border-[#e0ab1f] animate-shimmer"
                         >
                           <Plus className="w-3.5 h-3.5 text-[#1E1D23]" /> Add to Table
                         </button>
@@ -925,10 +937,10 @@ export default function App() {
 
       {/* Floating Cart Bar (at bottom of menu) */}
       {cart.length > 0 && (
-        <div className="fixed bottom-6 left-4 right-4 z-40 max-w-xl mx-auto">
+        <div className={`fixed bottom-6 left-4 right-4 z-40 max-w-xl mx-auto transition-all duration-300 ${cartWiggle ? 'animate-wiggle scale-102' : 'animate-float'}`}>
           <div
             onClick={() => setView('cart')}
-            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-2xl p-4 shadow-xl flex justify-between items-center cursor-pointer transition-all hover:scale-[1.01] border border-amber-500/20 active:scale-[0.99]"
+            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-2xl p-4 shadow-xl flex justify-between items-center cursor-pointer transition-all hover:scale-[1.01] border border-amber-500/20 active:scale-[0.99] animate-shimmer"
           >
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-xl relative">

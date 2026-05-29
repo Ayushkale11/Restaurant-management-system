@@ -17,3 +17,71 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Custom Keyframe Animations */
+
+/* Golden Shimmer Glint */
+@keyframes shimmer-glint {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  100% { transform: translateX(150%) skewX(-25deg); }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 200%; height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+.animate-shimmer:hover::after {
+  animation: shimmer-glint 1.2s ease-in-out infinite;
+}
+
+/* Gentle bounce-in for new items */
+@keyframes pop-in {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-pop-in {
+  animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* Floating effect for cart/logo */
+@keyframes float-gentle {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float-gentle 3s ease-in-out infinite;
+}
+
+/* Wiggle animation for cart additions */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1.02); }
+  25% { transform: rotate(-3deg) scale(1.02); }
+  75% { transform: rotate(3deg) scale(1.02); }
+}
+.animate-wiggle {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+/* Golden Pulse for Highlights */
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 194, 34, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 194, 34, 0); }
+}
+.animate-gold-pulse {
+  animation: gold-pulse 2s infinite;
+}
+

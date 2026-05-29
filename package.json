@@ -7,7 +7,7 @@
     "dev": "node run-dev.js",
     "dev:menu": "vite --host",
     "dev:dashboard": "vite --config vite.dashboard.config.ts --port 5175 --host",
-    "build": "tsc -b && vite build && vite build --config vite.dashboard.config.ts",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

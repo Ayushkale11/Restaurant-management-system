@@ -134,7 +134,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: path.resolve('index.html')
+        main: path.resolve('index.html'),
+        dashboard: path.resolve('dashboard.html')
       }
     }
   }

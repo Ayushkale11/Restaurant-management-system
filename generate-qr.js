@@ -2,7 +2,7 @@ import QRCode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
 
-const url = 'https://lemon-islands-joke.loca.lt';
+const url = 'https://test-one-theta-68.vercel.app';
 
 async function generate() {
   try {
@@ -36,7 +36,7 @@ async function generate() {
     console.log(`Saved QR code image to public directory: ${publicPath}`);
 
     // 4. Save QR code as PNG to artifacts directory
-    const artifactDir = 'C:/Users/kalea.000/.gemini/antigravity-ide/brain/110a13ce-ab54-47fa-aa9f-9bdf5e3623ae';
+    const artifactDir = 'C:/Users/kalea.000/.gemini/antigravity-ide/brain/f7a4cd68-1028-46bf-82c2-cd9b52363e71';
     if (fs.existsSync(artifactDir)) {
       const artifactPath = path.join(artifactDir, 'qr.png');
       await QRCode.toFile(artifactPath, url, {

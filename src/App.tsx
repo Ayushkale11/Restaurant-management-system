@@ -743,6 +743,37 @@ export default function App() {
       {/* Background watermark cheese texture overlay */}
       <div className="absolute inset-0 cheese-texture-subtle pointer-events-none opacity-25 z-0"></div>
 
+      {/* Cheesy Background Images (Very light highlights) */}
+      <div className="fixed top-24 -left-12 w-44 h-44 text-amber-500/[0.04] -rotate-12 pointer-events-none select-none z-0">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+          <path d="M15,80 C35,85 75,85 85,80 C90,60 90,40 85,20 C55,10 35,30 15,80 Z" fill="currentColor" fillOpacity="0.05" />
+          <circle cx="35" cy="40" r="7" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="65" cy="50" r="5" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="45" cy="65" r="6" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="60" cy="30" r="4" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+        </svg>
+      </div>
+
+      <div className="fixed top-[40%] -right-16 w-56 h-56 text-amber-500/[0.03] rotate-45 pointer-events-none select-none z-0">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+          <path d="M15,80 C35,85 75,85 85,80 C90,60 90,40 85,20 C55,10 35,30 15,80 Z" fill="currentColor" fillOpacity="0.05" />
+          <circle cx="35" cy="40" r="7" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="65" cy="50" r="5" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="45" cy="65" r="6" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="60" cy="30" r="4" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+        </svg>
+      </div>
+
+      <div className="fixed bottom-24 -left-16 w-52 h-52 text-amber-500/[0.04] rotate-12 pointer-events-none select-none z-0">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+          <path d="M15,80 C35,85 75,85 85,80 C90,60 90,40 85,20 C55,10 35,30 15,80 Z" fill="currentColor" fillOpacity="0.05" />
+          <circle cx="35" cy="40" r="7" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="65" cy="50" r="5" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="45" cy="65" r="6" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+          <circle cx="60" cy="30" r="4" fill="#f8fafc" stroke="currentColor" strokeWidth="3" />
+        </svg>
+      </div>
+
       {/* Top Navbar */}
       <div className="bg-[#FFC222] cheese-texture py-2 px-4 sticky top-0 z-40 shadow-md flex items-center justify-between border-b border-amber-600/35 relative">
         <div className="flex items-center gap-3">

@@ -303,11 +303,10 @@ export default function DashboardApp() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center px-4 font-sans">
-        <div className="bg-slate-900 border border-slate-800 p-8 pt-12 rounded-3xl w-full max-w-sm text-center space-y-6 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 inset-x-0 h-6 cheese-texture"></div>
-          <div className="absolute top-6 inset-x-0 cheese-drips" style={{ height: '14px' }}></div>
+        <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl w-full max-w-sm text-center space-y-6 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
           
-          <div className="mx-auto w-16 h-16 bg-white rounded-full flex items-center justify-center border border-slate-850 overflow-hidden shadow-md relative z-10">
+          <div className="mx-auto w-16 h-16 bg-white rounded-full flex items-center justify-center border border-slate-850 overflow-hidden shadow-md">
             <img src="/crazy_cheesy_logo.png" alt="Crazy Cheesy Logo" className="w-full h-full object-contain" />
           </div>
 
@@ -352,33 +351,33 @@ export default function DashboardApp() {
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col justify-between">
       
       {/* Top Banner and Navigation */}
-      <header className="bg-[#FFC222] cheese-texture border-b border-amber-600/35 sticky top-0 z-40 print:hidden shadow-lg">
+      <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 print:hidden shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full border border-amber-450 overflow-hidden bg-white shrink-0 shadow-md">
+            <div className="w-10 h-10 rounded-full border border-slate-850 overflow-hidden bg-white shrink-0 shadow-md">
               <img src="/crazy_cheesy_logo.png" alt="Crazy Cheesy Logo" className="w-full h-full object-contain" />
             </div>
             <div>
-              <h1 className="text-xl font-black tracking-tight text-slate-900 flex items-center gap-2">
+              <h1 className="text-xl font-black tracking-tight text-white flex items-center gap-2">
                 Crazy Cheesy Console
-                <span className="text-[10px] font-bold bg-[#78350f]/15 text-[#78350f] border border-[#78350f]/20 px-2 py-0.5 rounded uppercase tracking-wider">KDS</span>
+                <span className="text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded uppercase tracking-wider">KDS</span>
               </h1>
-              <p className="text-xs text-slate-700 font-medium">Live Dine-in Order Management Engine</p>
+              <p className="text-xs text-slate-400">Live Dine-in Order Management Engine</p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             {/* Audio Panel */}
-            <div className="flex items-center bg-white/80 backdrop-blur-md rounded-xl px-2 py-1.5 border border-amber-300 gap-2">
+            <div className="flex items-center bg-slate-950 rounded-xl px-2 py-1.5 border border-slate-800 gap-2">
               <button
                 onClick={() => setSoundEnabled(!soundEnabled)}
                 className={`p-1.5 rounded-lg transition-colors
                   ${soundEnabled 
-                    ? 'bg-amber-100 text-amber-900 border border-amber-200' 
-                    : 'bg-slate-100 text-slate-400 border border-slate-200'}`}
+                    ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' 
+                    : 'bg-slate-800 text-slate-400 border border-slate-700'}`}
                 title={soundEnabled ? 'Mute Chime' : 'Unmute Chime'}
               >
-                {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-900" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
+                {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
               </button>
               <input 
                 type="range"
@@ -387,12 +386,12 @@ export default function DashboardApp() {
                 step="0.1"
                 value={soundVolume}
                 onChange={(e) => setSoundVolume(Number(e.target.value))}
-                className="w-16 accent-amber-600 cursor-pointer h-1 rounded-full bg-slate-200"
+                className="w-16 accent-amber-550 cursor-pointer h-1 rounded-full bg-slate-800"
                 title={`Volume: ${Math.floor(soundVolume * 100)}%`}
               />
               <button 
                 onClick={triggerSoundTest}
-                className="text-[10px] font-black text-[#78350f] hover:text-[#5e290b] uppercase px-1.5 py-0.5 bg-amber-50 border border-amber-200 rounded"
+                className="text-[10px] font-bold text-slate-400 hover:text-slate-200 uppercase px-1.5 py-0.5 bg-slate-900 border border-slate-750 rounded"
               >
                 Test
               </button>
@@ -400,14 +399,13 @@ export default function DashboardApp() {
 
             <button
               onClick={handleLogout}
-              className="bg-[#78350f] hover:bg-[#5e290b] text-white px-4.5 py-2 rounded-xl text-xs font-black transition-all shadow-sm"
+              className="bg-slate-850 hover:bg-slate-800 border border-slate-750 text-slate-400 hover:text-slate-200 px-4.5 py-2 rounded-xl text-xs font-bold transition-all"
             >
               Sign Out
             </button>
           </div>
         </div>
       </header>
-      <div className="cheese-drips sticky top-[72px] z-30 -mt-0.5 print:hidden"></div>
 
       {/* Main Console Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full print:p-0">

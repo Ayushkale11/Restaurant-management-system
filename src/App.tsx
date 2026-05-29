@@ -731,24 +731,20 @@ export default function App() {
 
   // 5. MAIN MENU VIEW (DEFAULT)
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24 relative overflow-x-hidden">
-      {/* Background watermark cheese texture overlay */}
-      <div className="absolute inset-0 cheese-texture-subtle pointer-events-none opacity-20 z-0"></div>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
 
       {/* Top Navbar */}
-      <div className="bg-[#FFC222] cheese-texture py-2 px-4 sticky top-0 z-40 shadow-md flex items-center justify-between border-b border-amber-600/35 relative">
+      <div className="bg-white border-b border-slate-100 py-2 px-4 sticky top-0 z-40 shadow-sm flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/crazy_cheesy_logo.png" alt="Crazy Cheesy Logo" className="w-11 h-11 object-contain rounded-full shadow-sm border border-white bg-white" />
-          <span className="font-extrabold text-lg text-slate-900 tracking-tight drop-shadow-sm">Crazy Cheesy</span>
+          <img src="/crazy_cheesy_logo.png" alt="Crazy Cheesy Logo" className="w-11 h-11 object-contain rounded-full shadow-sm" />
+          <span className="font-extrabold text-lg text-slate-900 tracking-tight">Crazy Cheesy</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs bg-white text-[#78350f] font-black px-3 py-1.5 rounded-full border border-amber-400 shadow-sm">
+          <span className="text-xs bg-[#FAF6EE] text-[#78350f] font-bold px-3 py-1.5 rounded-full border border-[#EBE2CF]">
             Table {tableNumber}
           </span>
         </div>
       </div>
-      {/* Melting cheese drips under navbar */}
-      <div className="cheese-drips sticky top-[60px] z-30 -mt-0.5 shadow-sm"></div>
 
       {/* Hero Header */}
       <header className="relative bg-white pb-6 shadow-sm">
@@ -795,7 +791,7 @@ export default function App() {
       </header>
 
       {/* Navigation & Search Sticky Bar */}
-      <div className="sticky top-[80px] z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+      <div className="sticky top-[60px] z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 

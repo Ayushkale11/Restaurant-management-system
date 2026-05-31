@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import {
   Search, MapPin, Clock, Star, X, Info, Utensils,
-  ShoppingCart, Plus, Minus, ArrowLeft, CreditCard, ShieldCheck
+  ShoppingCart, Plus, Minus, ArrowLeft, CreditCard, ShieldCheck,
+  Sparkles, Check, ArrowRight
 } from 'lucide-react';
 import QRCode from 'qrcode';
 import { supabase } from './supabase';
@@ -93,6 +94,43 @@ export default function App() {
   const [tableNumber, setTableNumber] = useState('1');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartWiggle, setCartWiggle] = useState(false);
+
+  // Auto-Recommendation System State
+  const [recommendationModalOpen, setRecommendationModalOpen] = useState(false);
+  const [justAddedItem, setJustAddedItem] = useState<MenuItem | null>(null);
+  const [recommendedItems, setRecommendedItems] = useState<MenuItem[]>([]);
+  const [addedRecIds, setAddedRecIds] = useState<number[]>([]);
+
+  // Get auto-recommendations for any item added to cart
+  const getRecommendationsFor = (item: MenuItem) => {
+    let recIds: number[] = [];
+    switch (item.category) {
+      case 'Pizza':
+        recIds = [16, 23]; // Cheese Garlic Bread, Cold Chocolate
+        break;
+      case 'Burger':
+        recIds = [20, 25]; // Cheese Fries Peri Peri, Green Apple Mojito
+        break;
+      case 'Sandwich & Toasties':
+        recIds = [20, 23]; // Cheese Fries Peri Peri, Cold Chocolate
+        break;
+      case 'Pasta':
+        recIds = [16, 25]; // Cheese Garlic Bread, Green Apple Mojito
+        break;
+      case 'Fries & Sides':
+        recIds = [1, 23]; // Classic Veggie Pizza, Cold Chocolate
+        break;
+      case 'Beverages & Shakes':
+        recIds = [8, 20]; // Double Dacker Burger, Cheese Fries Peri Peri
+        break;
+      case 'Jain Special':
+        recIds = item.id === 26 ? [27, 23] : [26, 23]; // Cross recommend Jain Burger/Pizza + Cold Chocolate
+        break;
+      default:
+        recIds = [16, 23];
+    }
+    return menuData.filter(i => recIds.includes(i.id) && i.id !== item.id);
+  };
 
   const triggerCartWiggle = () => {
     setCartWiggle(true);
@@ -216,7 +254,7 @@ export default function App() {
   }, [view]);
 
   // Add / Edit Cart Actions
-  const addToCart = (item: MenuItem) => {
+  const addToCart = (item: MenuItem, skipRecommendation: boolean = false) => {
     triggerCartWiggle();
     setCart(prev => {
       const existing = prev.find(i => i.item.id === item.id);
@@ -225,6 +263,20 @@ export default function App() {
       }
       return [...prev, { item, quantity: 1 }];
     });
+
+    // Auto-recommendation trigger logic - only for brand new items added to cart
+    if (!skipRecommendation) {
+      const isAlreadyInCart = cart.some(c => c.item.id === item.id);
+      if (!isAlreadyInCart) {
+        const recs = getRecommendationsFor(item);
+        if (recs && recs.length > 0) {
+          setJustAddedItem(item);
+          setRecommendedItems(recs);
+          setAddedRecIds([]); // Reset added recommendations tracker
+          setRecommendationModalOpen(true);
+        }
+      }
+    }
   };
 
   const removeFromCart = (item: MenuItem) => {
@@ -727,7 +779,7 @@ export default function App() {
                 setActiveOrder(null);
                 setView('menu');
               }}
-              className="w-full bg-slate-850 hover:bg-slate-900 text-white font-bold py-3.5 rounded-2xl shadow-md transition-all text-center text-sm"
+              className="w-full bg-yellow-100 hover:bg-yellow-200 text-yellow-950 font-bold py-3.5 rounded-2xl shadow-md border border-yellow-200 transition-all text-center text-sm"
             >
               Order Something Else
             </button>
@@ -1100,6 +1152,102 @@ export default function App() {
                   Add to Cart
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5.5 AUTO-RECOMMENDATION MODAL */}
+      {recommendationModalOpen && justAddedItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-opacity"
+             onClick={() => setRecommendationModalOpen(false)}>
+          <div
+            className="bg-[#FAF6EE] border-2 border-[#EBE2CF] w-full max-w-lg rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 transform transition-all animate-pop-in relative overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Background design accents */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-orange-500/5 rounded-full blur-xl pointer-events-none"></div>
+
+            {/* Header */}
+            <div className="text-center space-y-2">
+              <div className="mx-auto w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center border border-amber-200 text-[#78350f] animate-wiggle">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <h2 className="text-xl font-black text-slate-900">Excellent Choice! 🍳</h2>
+              <p className="text-xs text-slate-500 leading-relaxed max-w-sm mx-auto">
+                You added <span className="font-bold text-[#78350f]">{justAddedItem.name}</span> to the table. Customers also order these matching items together:
+              </p>
+            </div>
+
+            {/* Recommendations List */}
+            <div className="space-y-3.5">
+              {recommendedItems.map((recItem) => {
+                const isAdded = addedRecIds.includes(recItem.id);
+                return (
+                  <div
+                    key={recItem.id}
+                    className="bg-white rounded-2xl p-3 border border-[#EBE2CF]/70 flex items-center gap-3.5 shadow-sm hover:shadow-md transition-all duration-300"
+                  >
+                    <img
+                      src={recItem.img}
+                      alt={recItem.name}
+                      className="w-16 h-16 rounded-xl object-cover bg-slate-100 shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[9px] font-bold text-amber-600 uppercase tracking-wide">
+                        {recItem.category}
+                      </span>
+                      <h4 className="text-sm font-bold text-slate-900 truncate leading-snug">
+                        {recItem.name}
+                      </h4>
+                      <span className="text-xs font-extrabold text-[#78350f] mt-1 block">
+                        ₹{recItem.price}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        if (!isAdded) {
+                          addToCart(recItem, true);
+                          setAddedRecIds(prev => [...prev, recItem.id]);
+                        }
+                      }}
+                      className={`text-xs font-extrabold px-4 py-2.5 rounded-xl transition-all shadow-sm shrink-0 active:scale-95 border flex items-center gap-1
+                        ${isAdded
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200 cursor-default'
+                          : 'bg-[#FFC222] hover:bg-[#e0ab1f] text-slate-900 border-[#e0ab1f]'}`}
+                    >
+                      {isAdded ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" /> Added
+                        </>
+                      ) : (
+                        `Add +₹${recItem.price}`
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Footer Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-3 border-t border-[#EBE2CF]/50">
+              <button
+                onClick={() => setRecommendationModalOpen(false)}
+                className="flex-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 py-3 rounded-2xl text-xs font-extrabold transition-all shadow-sm text-center"
+              >
+                Continue Ordering
+              </button>
+              <button
+                onClick={() => {
+                  setRecommendationModalOpen(false);
+                  setView('cart');
+                }}
+                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white py-3 rounded-2xl text-xs font-extrabold transition-all shadow-md text-center flex items-center justify-center gap-1.5 active:scale-[0.98]"
+              >
+                View Basket <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
